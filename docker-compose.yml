@@ -26,14 +26,15 @@ services:
     - ./build/state:/state:rw
 
   generate-configs:
-    build: dockerfiles/ruby-alpine
-    command: ash -c "/bin/bash /testnet/generate-configurations.sh && touch /state/configs-generated"
+    build: dockerfiles/testnet
+    command: /bin/bash -c "sh /testnet/generate-configurations.sh /addresses /config-build && touch /state/configs-generated"
     volumes:
-    - ./bin/ash:/bin-mount
+    - ./bin/bash:/bin-mount
     - ./build/generated-addresses:/addresses
     - ./build/catapult-config:/config-build
     - ./build/nemesis:/nemesis:rw
     - ./build/state:/state:rw
+    - ./testnet:/testnet:rw
     depends_on:
     - generate-raw-addresses
 
