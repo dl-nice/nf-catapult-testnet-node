@@ -1,0 +1,3 @@
+[submodule "testnet/data"]
+	path = testnet/data
+	url = git@github.com:nemfoundation/catapult-testnet-data.git
