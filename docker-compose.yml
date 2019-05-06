@@ -19,7 +19,7 @@ services:
 
   generate-raw-addresses:
     image: techbureau/catapult-tools:gcc-0.3.0.2
-    command: bash -c "/bin-mount/generate-raw-addresses-if-needed 50 /addresses/raw-addresses.txt /addresses/addresses.yaml"
+    command: bash -c "/bin-mount/generate-raw-addresses-if-needed 4 /addresses/raw-addresses.txt /addresses/addresses.yaml"
     volumes:
     - ./bin/bash:/bin-mount
     - ./build/generated-addresses:/addresses:rw
@@ -35,10 +35,9 @@ services:
 
   generate-configs:
     build: dockerfiles/ruby-alpine
-    command: ash -c "/bin-mount/wait /addresses/addresses.yaml && /ruby/bin/generate-and-write-configurations.rb /addresses/addresses.yaml /config-build /nemesis && touch /state/configs-generated"
+    command: ash -c "/bin-mount/wait /addresses/addresses.yaml && /testnet/generate-configurations.sh && touch /state/configs-generated"
     volumes:
     - ./bin/ash:/bin-mount
-    - ./ruby:/ruby
     - ./build/generated-addresses:/addresses
     - ./build/catapult-config:/config-build
     - ./build/nemesis:/nemesis:rw
@@ -77,74 +76,21 @@ services:
     - init-db
     - generate-configs
 
-  peer-node-0-nemgen:
-    build: dockerfiles/nemgen
-    command: bash -c "/bin-mount/wait /state/configs-generated && /bin/bash /userconfig/nemgen.sh && touch /state/peer-node-0-nemgen"
-    stop_signal: SIGINT
-    volumes:
-    - ./build/catapult-config/peer-node-0/userconfig/resources/:/userconfig/resources/
-    - ./build/nemesis/:/nemesis
-    - ./data/peer-node-0:/data:rw
-    - ./bin/bash:/bin-mount
-    - ./build/state:/state:rw
-    depends_on:
-    - generate-configs
-
-  peer-node-0:
-    build: dockerfiles/catapult
-    command: bash -c "/bin-mount/wait /state/peer-node-0-nemgen && /bin/bash /userconfig/startServer.sh"
-    stop_signal: SIGINT
-    volumes:
-    - ./build/catapult-config/peer-node-0/userconfig/resources/:/userconfig/resources/
-    - ./data/peer-node-0:/data:rw
-    - ./bin/bash:/bin-mount
-    - ./build/state:/state
-    depends_on:
-    - generate-configs
-    - peer-node-0-nemgen
-
-  peer-node-1-nemgen:
-    build: dockerfiles/nemgen
-    command: bash -c "/bin-mount/wait /state/configs-generated && /bin/bash /userconfig/nemgen.sh && touch /state/peer-node-1-nemgen"
-    stop_signal: SIGINT
-    volumes:
-    - ./build/catapult-config/peer-node-1/userconfig/resources/:/userconfig/resources/
-    - ./build/nemesis/:/nemesis
-    - ./data/peer-node-1:/data:rw
-    - ./bin/bash:/bin-mount
-    - ./build/state:/state:rw
-    depends_on:
-    - generate-configs
-
   peer-node-1:
     build: dockerfiles/catapult
-    command: bash -c "/bin-mount/wait /state/peer-node-1-nemgen && /bin/bash /userconfig/startServer.sh"
+    command: bash -c "/bin-mount/wait /state/configs-generated && /bin/bash /userconfig/startServer.sh"
     stop_signal: SIGINT
     volumes:
     - ./build/catapult-config/peer-node-1/userconfig/resources/:/userconfig/resources/
     - ./data/peer-node-1:/data:rw
     - ./bin/bash:/bin-mount
     - ./build/state:/state
-    depends_on:
-    - generate-configs
-    - peer-node-1-nemgen
-
-  api-node-0-nemgen:
-    build: dockerfiles/nemgen
-    command: bash -c "/bin-mount/wait /state/configs-generated && /bin/bash /userconfig/nemgen.sh && touch /state/api-node-0-nemgen"
-    stop_signal: SIGINT
-    volumes:
-    - ./build/catapult-config/api-node-0/userconfig/resources/:/userconfig/resources/
-    - ./build/nemesis/:/nemesis
-    - ./data/api-node-0:/data:rw
-    - ./bin/bash:/bin-mount
-    - ./build/state:/state:rw
     depends_on:
     - generate-configs
 
   api-node-0:
     build: dockerfiles/catapult
-    command: bash -c "/bin-mount/wait /state/api-node-0-nemgen && /bin/bash /userconfig/startServer.sh"
+    command: bash -c "/bin-mount/wait /state/configs-generated && /bin/bash /userconfig/startServer.sh"
     stop_signal: SIGINT
     volumes:
     - ./build/catapult-config/api-node-0/userconfig/resources/:/userconfig/resources/
@@ -153,5 +99,4 @@ services:
     - ./build/state:/state
     depends_on:
     - generate-configs
-    - api-node-0-nemgen
 
