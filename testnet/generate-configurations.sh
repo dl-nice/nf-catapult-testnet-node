@@ -1,10 +1,12 @@
 #!/bin/bash
 
 # NODE_IP defaults to 'api-node-0' in local environment
-ADDRESSES_PATH=$1
-CONFIG_PATH=$2
-NODE_IP=${3:-api-node-0}
+STATE_PATH=$1
+ADDRESSES_PATH=$2
+CONFIG_PATH=$3
+NODE_IP=${4:-api-node-0}
 
+# check presence of tools
 CAT_BIN=`which cat`
 GREP_BIN=`which grep`
 TAIL_BIN=`which tail`
@@ -12,12 +14,20 @@ SED_BIN=`which sed`
 AWK_BIN=`which awk`
 GIT_BIN=`which git`
 
-if [ -a ${ADDRESSES_PATH}/raw-addresses.txt ];
+# verify current state
+if [ -e ${STATE_PATH}/configs-edited ];
+then
+    echo "[ERROR] Configuration files have already been edited."
+    exit 1
+fi
+
+# check for file presence
+if [ -e ${ADDRESSES_PATH}/raw-addresses.txt ];
 then
     echo 
 else
     echo "[ERROR] Path '${ADDRESSES_PATH}' does not contain 'raw-addresses.txt' file."
-    exit 1
+    exit 2
 fi
 
 # read private keys from build/generated-addresses/raw-addresses.txt
@@ -82,8 +92,11 @@ config_rest_gateway() {
 save_state_with_git() {
     ${GIT_BIN} checkout -b config-done
     ${GIT_BIN} add build/
-    ${GIT_BIN} commit -m "configuration done"
+    ${GIT_BIN} commit -m "testnet configuration done"
 }
+
+# temporary config state
+touch ${STATE_PATH}/configs-generated
 
 echo Now configuring api-node-0..
 echo Using Private Key: ${PRIVKEY_API_NODE}
@@ -108,5 +121,8 @@ config_rest_gateway
 
 # save configuration in git
 save_state_with_git
+
+# save config state
+touch ${STATE_PATH}/configs-edited
 
 echo Done configuring your Catapult Testnet node!

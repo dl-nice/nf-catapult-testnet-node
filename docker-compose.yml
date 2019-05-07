@@ -27,7 +27,7 @@ services:
 
   generate-configs:
     build: dockerfiles/testnet
-    command: /bin/bash -c "sh /testnet/generate-configurations.sh /addresses /config-build && touch /state/configs-generated"
+    command: /bin/bash -c "sh /testnet/generate-configurations.sh /state /addresses /config-build"
     volumes:
     - ./bin/bash:/bin-mount
     - ./build/generated-addresses:/addresses
@@ -60,7 +60,7 @@ services:
 
   rest-gateway:
     image: techbureau/catapult-rest-server:1.0.14
-    command: ash -c "/bin-mount/wait /state/configs-generated && npm start resources/rest.json /userconfig/rest.json"
+    command: ash -c "/bin-mount/wait /state/configs-edited && npm start resources/rest.json /userconfig/rest.json"
     ports:
     - "3000:3000"
     volumes:
@@ -73,7 +73,7 @@ services:
 
   peer-node-1:
     build: dockerfiles/catapult
-    command: bash -c "/bin-mount/wait /state/configs-generated && /bin/bash /userconfig/startServer.sh"
+    command: bash -c "/bin-mount/wait /state/configs-edited && /bin/bash /userconfig/startServer.sh"
     stop_signal: SIGINT
     volumes:
     - ./build/catapult-config/peer-node-1/userconfig/resources/:/userconfig/resources/
@@ -85,7 +85,7 @@ services:
 
   api-node-0:
     build: dockerfiles/catapult
-    command: bash -c "/bin-mount/wait /state/configs-generated && /bin/bash /userconfig/startServer.sh"
+    command: bash -c "/bin-mount/wait /state/configs-edited && /bin/bash /userconfig/startServer.sh"
     stop_signal: SIGINT
     volumes:
     - ./build/catapult-config/api-node-0/userconfig/resources/:/userconfig/resources/
