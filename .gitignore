@@ -1,5 +1,6 @@
 data/*
 !data/README.md
+!data/mongo
 build/catapult-config/*
 !build/catapult-config/README.md
 build/generated-addresses/*
