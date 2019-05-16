@@ -1,6 +1,5 @@
 data/*
 !data/README.md
-!data/mongo
 build/catapult-config/*
 !build/catapult-config/README.md
 build/generated-addresses/*
@@ -10,3 +9,4 @@ build/nemesis/*
 build/state/*
 !build/state/README.md
 testnet/data/api-node-0
+testnet/data/mongo
