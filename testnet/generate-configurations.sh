@@ -13,6 +13,7 @@ TAIL_BIN=`which tail`
 SED_BIN=`which sed`
 AWK_BIN=`which awk`
 GIT_BIN=`which git`
+WGET_BIN=`which wget`
 
 # verify current state
 if [ -e ${STATE_PATH}/configs-edited ];
@@ -95,6 +96,11 @@ save_state_with_git() {
     ${GIT_BIN} commit -m "testnet configuration done"
 }
 
+download_snapshot() {
+    ${WGET_BIN} -O /tmp/api-node-data-190514.tar.gz  http://jp5.nemesis.land/share/api-node-data-190514.tar.gz
+    tar xfzv /tmp/api-node-data-190514.tar.gz -C /testnet --overwrite
+}
+
 # temporary config state
 touch ${STATE_PATH}/configs-generated
 
@@ -124,5 +130,8 @@ save_state_with_git
 
 # save config state
 touch ${STATE_PATH}/configs-edited
+
+# download snapshot
+download_snapshot
 
 echo Done configuring your Catapult Testnet node!
