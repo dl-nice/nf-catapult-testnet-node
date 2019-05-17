@@ -128,10 +128,11 @@ config_rest_gateway
 # save configuration in git
 save_state_with_git
 
-# save config state
-touch ${STATE_PATH}/configs-edited
-
 # download snapshot
 download_snapshot
 
+# save config state
+touch ${STATE_PATH}/configs-edited
+
 echo Done configuring your Catapult Testnet node!
+

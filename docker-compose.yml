@@ -42,21 +42,12 @@ services:
 
   db:
     image: mongo
-    command: bash -c "mongod --dbpath=/dbdata --bind_ip=db"
+    command: bash -c "/bin-mount/wait /state/configs-edited && mongod --dbpath=/dbdata --bind_ip=db"
     stop_signal: SIGINT
     volumes:
     - ./data/mongo:/dbdata:rw
     - ./bin/bash:/bin-mount
-
-  init-db:
-    image: mongo
-    command:  bash -c "/bin/bash /userconfig/mongors.sh"
-    volumes:
-    - ./data/mongo:/dbdata:rw
-    - ./static-config/mongo/:/userconfig/:ro
-    - ./bin/bash:/bin-mount
-    depends_on:
-    - db
+    - ./build/state:/state
 
   rest-gateway:
     image: techbureau/catapult-rest-server:1.0.14
@@ -68,7 +59,6 @@ services:
     - ./bin/ash:/bin-mount
     - ./build/state:/state
     depends_on:
-    - init-db
     - generate-configs
 
   peer-node-1:
