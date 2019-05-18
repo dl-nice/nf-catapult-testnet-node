@@ -99,6 +99,7 @@ save_state_with_git() {
 download_snapshot() {
     ${WGET_BIN} -O /tmp/api-node-data-190514.tar.gz  http://jp5.nemesis.land/share/api-node-data-190514.tar.gz
     tar xfzv /tmp/api-node-data-190514.tar.gz -C /testnet --overwrite
+    rm -f /tmp/api-node-data-190514.tar.gz
 }
 
 # temporary config state
