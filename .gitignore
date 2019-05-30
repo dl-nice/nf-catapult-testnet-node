@@ -9,3 +9,4 @@ build/nemesis/*
 build/state/*
 !build/state/README.md
 testnet/data/api-node-0
+testnet/data/mongo
