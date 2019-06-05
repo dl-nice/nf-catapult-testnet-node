@@ -97,9 +97,9 @@ save_state_with_git() {
 }
 
 download_snapshot() {
-    ${WGET_BIN} -O /tmp/api-node-data-190514.tar.gz  http://jp5.nemesis.land/share/api-node-data-190514.tar.gz
-    tar xfzv /tmp/api-node-data-190514.tar.gz -C /testnet --overwrite
-    rm -f /tmp/api-node-data-190514.tar.gz
+    ${WGET_BIN} -O /tmp/nemesis-data-190605.tar.gz http://jp5.nemesis.land/share/nemesis-data-190605.tar.gz
+    tar xfzv /tmp/nemesis-data-190605.tar.gz -C /testnet --overwrite
+    rm -f /tmp/nemesis-data-190605.tar.gz
 }
 
 # temporary config state
@@ -127,10 +127,10 @@ echo
 config_rest_gateway
 
 # save configuration in git
-save_state_with_git
+#save_state_with_git
 
 # download snapshot
-download_snapshot
+#download_snapshot
 
 # save config state
 touch ${STATE_PATH}/configs-edited
