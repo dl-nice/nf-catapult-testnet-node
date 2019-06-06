@@ -8,5 +8,7 @@ build/nemesis/*
 !build/nemesis/README.md
 build/state/*
 !build/state/README.md
-#testnet/data/api-node-0
-#testnet/data/mongo
+testnet/data/api-node-0
+testnet/data/mongo
+data/api-node-0
+data/peer-node-1
