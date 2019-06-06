@@ -1,4 +1,4 @@
-[Japanese README](https://github.com/tech-bureau/catapult-service-bootstrap/blob/master/README.ja.md)
+[Japanese README](https://github.com/nemfoundation/nf-catapult-testnet-node/blob/master/README.ja.md)
 
 
 # Catapult Service Bootstrap
@@ -9,7 +9,11 @@ NOTE: this bootstrap setup is for learning and development purposes, it should n
 
 We use docker images as our default packaging and distribution mechanism.  These bootstrap scripts will prepare some files on disk and then leverage docker-compose to startup and run the needed set of containers so the server can function correctly.
 
-## Evironment Dependencies
+:warning: This fork connects to the **NEM Foundation Experimental Testnet for Catapult**. The node configuration is checked in this package for a better installation flow.
+
+:warning: Do not use this package if you wish to create a private Catapult network. The fork is modified to pre-configure the node for use **only with** the **NEM Foundation Experimental Testnet for Catapult**.
+
+## Environment Dependencies
 
 The only dependency that is required is git so you can clone this repository, and docker/docker-compose.  If you do not have the docker tools installed alredy you can get the installation details from the docker community website:
 
@@ -19,8 +23,8 @@ The only dependency that is required is git so you can clone this repository, an
 
 ## Installation & Startup Instructions
 
-1. `git clone git@github.com:tech-bureau/catapult-service-bootstrap.git`
-2. `cd catapult-service-bootstrap`
+1. `git clone git@github.com:nemfoundation/nf-catapult-testnet-node.git`
+2. `cd nf-catapult-testnet-node`
 3. `docker-compose up`
 
 If you followed the docker installation instructions correctly, or already had docker/docker-compose installed, you should see docker doing its job downloading the container images for the first time, then going through running the bootstrap setup.  Should things succeed it should start the Catapult Server right up and you should see the live logs start scrolling by in the foreground like so:
