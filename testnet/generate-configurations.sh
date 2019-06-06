@@ -5,6 +5,7 @@ STATE_PATH=$1
 ADDRESSES_PATH=$2
 CONFIG_PATH=$3
 NODE_IP=${4:-api-node-0}
+GENERATION_HASH=${5:-9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7}
 
 # check presence of tools
 CAT_BIN=`which cat`
@@ -65,6 +66,7 @@ config_api_node() {
     ${SED_BIN} -i -e "s/bootKey =.*/bootKey = ${PRIVKEY_API_NODE}/" ${CONFIG_PATH}/api-node-0/userconfig/resources/config-user.properties
     ${SED_BIN} -i -e "s/\"publicKey\": \"\"/\"publicKey\": \"${PUBKEY_PEER_NODE}\"/" ${CONFIG_PATH}/api-node-0/userconfig/resources/peers-p2p.json
     ${SED_BIN} -i -e "s/\"publicKey\": \"\"/\"publicKey\": \"${PUBKEY_API_NODE}\"/" ${CONFIG_PATH}/api-node-0/userconfig/resources/peers-api.json
+    ${SED_BIN} -i -e "s/generationHash =.*/generationHash = ${GENERATION_HASH}/" ${CONFIG_PATH}/api-node-0/userconfig/resources/config-network.properties
 }
 
 # configure the peer-node-1 Peer node
@@ -77,6 +79,7 @@ config_peer_node() {
     ${SED_BIN} -i -e "s/bootKey =.*/bootKey = ${PRIVKEY_PEER_NODE}/" ${CONFIG_PATH}/peer-node-1/userconfig/resources/config-user.properties
     ${SED_BIN} -i -e "s/\"publicKey\": \"\"/\"publicKey\": \"${PUBKEY_PEER_NODE}\"/" ${CONFIG_PATH}/peer-node-1/userconfig/resources/peers-p2p.json
     ${SED_BIN} -i -e "s/\"publicKey\": \"\"/\"publicKey\": \"${PUBKEY_API_NODE}\"/" ${CONFIG_PATH}/peer-node-1/userconfig/resources/peers-api.json
+    ${SED_BIN} -i -e "s/generationHash =.*/generationHash = ${GENERATION_HASH}/" ${CONFIG_PATH}/api-node-0/userconfig/resources/config-network.properties
 }
 
 # configure the rest-gateway-0 REST gateway
