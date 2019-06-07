@@ -4,8 +4,10 @@
 STATE_PATH=$1
 ADDRESSES_PATH=$2
 CONFIG_PATH=$3
-NODE_IP=${4:-api-node-0}
-GENERATION_HASH=${5:-9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7}
+GENERATION_HASH=${4:-9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7}
+NODE_IP=${5:-api-node-0}
+API_NODE_NAME=${6:-api-node-$((1 + RANDOM % 1000))}
+PEER_NODE_NAME=${7:-peer-node-$((1 + RANDOM % 1000))}
 
 # check presence of tools
 CAT_BIN=`which cat`
@@ -13,7 +15,7 @@ GREP_BIN=`which grep`
 TAIL_BIN=`which tail`
 SED_BIN=`which sed`
 AWK_BIN=`which awk`
-GIT_BIN=`which git`
+#GIT_BIN=`which git`
 WGET_BIN=`which wget`
 
 # verify current state
@@ -62,7 +64,8 @@ config_api_node() {
     ## 2) set bootKey
     ## 3) register neighboor peer node
     ## 4) register neighboor api node (self)
-    ${SED_BIN} -i -e "s/api-node-0/${NODE_IP}/" ${CONFIG_PATH}/api-node-0/userconfig/resources/config-node.properties
+    ${SED_BIN} -i -e "s/host =.*/host = ${NODE_IP}/" ${CONFIG_PATH}/api-node-0/userconfig/resources/config-node.properties
+    ${SED_BIN} -i -e "s/friendlyName =.*/friendlyName = ${API_NODE_NAME}/" ${CONFIG_PATH}/api-node-0/userconfig/resources/config-node.properties
     ${SED_BIN} -i -e "s/bootKey =.*/bootKey = ${PRIVKEY_API_NODE}/" ${CONFIG_PATH}/api-node-0/userconfig/resources/config-user.properties
     ${SED_BIN} -i -e "s/\"publicKey\": \"\"/\"publicKey\": \"${PUBKEY_PEER_NODE}\"/" ${CONFIG_PATH}/api-node-0/userconfig/resources/peers-p2p.json
     ${SED_BIN} -i -e "s/\"publicKey\": \"\"/\"publicKey\": \"${PUBKEY_API_NODE}\"/" ${CONFIG_PATH}/api-node-0/userconfig/resources/peers-api.json
@@ -75,6 +78,8 @@ config_peer_node() {
     ## 2) set bootKey
     ## 3) register neighboor peer node (self)
     ## 4) register neighboor api node
+    ${SED_BIN} -i -e "s/host =.*/host = ${NODE_IP}/" ${CONFIG_PATH}/peer-node-1/userconfig/resources/config-node.properties
+    ${SED_BIN} -i -e "s/friendlyName =.*/friendlyName = ${PEER_NODE_NAME}/" ${CONFIG_PATH}/peer-node-1/userconfig/resources/config-node.properties
     ${SED_BIN} -i -e "s/harvestKey =.*/harvestKey = ${PRIVKEY_HARVEST}/" ${CONFIG_PATH}/peer-node-1/userconfig/resources/config-harvesting.properties
     ${SED_BIN} -i -e "s/bootKey =.*/bootKey = ${PRIVKEY_PEER_NODE}/" ${CONFIG_PATH}/peer-node-1/userconfig/resources/config-user.properties
     ${SED_BIN} -i -e "s/\"publicKey\": \"\"/\"publicKey\": \"${PUBKEY_PEER_NODE}\"/" ${CONFIG_PATH}/peer-node-1/userconfig/resources/peers-p2p.json

@@ -12,3 +12,4 @@ testnet/data/api-node-0
 testnet/data/mongo
 data/api-node-0
 data/peer-node-1
+data/mongo
