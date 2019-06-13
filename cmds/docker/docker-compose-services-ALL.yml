@@ -48,28 +48,6 @@ services:
     depends_on:
     - init-db
 
-  peer-node-0:
-    build: dockerfiles/catapult
-    command: bash -c "/bin-mount/wait /state/peer-node-0-nemgen && /bin/bash /userconfig/startServer.sh"
-    stop_signal: SIGINT
-    volumes:
-    - ../../build/catapult-config/peer-node-0/userconfig/resources/:/userconfig/resources/
-    - ../../data/peer-node-0:/data:rw
-    - ../../bin/bash:/bin-mount
-    - ../../build/state:/state
-
-  peer-node-0-tools:
-    image: techbureau/catapult-tools-private:gcc
-    command: ["sleep","1000000"]
-    stop_signal: SIGINT
-    volumes:
-    - ../../build/catapult-config/peer-node-0/userconfig/resources/:/userconfig/resources/
-    - ../../data/peer-node-0:/data:rw
-    - ../../bin/bash:/bin-mount
-    - ../../build/state:/state
-    depends_on:
-    - peer-node-0
-
   peer-node-1:
     build: dockerfiles/catapult
     command: bash -c "/bin-mount/wait /state/peer-node-1-nemgen && /bin/bash /userconfig/startServer.sh"
@@ -79,6 +57,18 @@ services:
     - ../../data/peer-node-1:/data:rw
     - ../../bin/bash:/bin-mount
     - ../../build/state:/state
+
+  peer-node-1-tools:
+    image: techbureau/catapult-tools-private:gcc
+    command: ["sleep","1000000"]
+    stop_signal: SIGINT
+    volumes:
+    - ../../build/catapult-config/peer-node-1/userconfig/resources/:/userconfig/resources/
+    - ../../data/peer-node-1:/data:rw
+    - ../../bin/bash:/bin-mount
+    - ../../build/state:/state
+    depends_on:
+    - peer-node-1
 
   api-node-0:
     build: dockerfiles/catapult
