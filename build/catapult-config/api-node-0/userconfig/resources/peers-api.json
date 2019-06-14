@@ -2,17 +2,6 @@
   "_info": "this file contains a list of api_node peers",
   "knownPeers": [
     {
-      "publicKey": "25EBEE032B5D763E13897E2C389404054DA7C9FA97455A64CF622F79ED817186",
-      "endpoint": {
-        "host": "52.194.207.217",
-        "port": 7910
-      },
-      "metadata": {
-        "name": "api-node-jp-8",
-        "roles": "Api"
-      }
-    },
-    {
       "publicKey": "",
       "endpoint": {
         "host": "api-node-0",
