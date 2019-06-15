@@ -11,17 +11,6 @@
         "name": "peer-node-0",
         "roles": "Peer"
       }
-    },
-    {
-      "publicKey": "E9DFB442684B83C390E5F02A817A6D477AB03C9E14D3F2D24BFD8CF8349BEB0E",
-      "endpoint": {
-        "host": "peer-node-1",
-        "port": 7900
-      },
-      "metadata": {
-        "name": "peer-node-1",
-        "roles": "Peer"
-      }
     }
   ]
 }
