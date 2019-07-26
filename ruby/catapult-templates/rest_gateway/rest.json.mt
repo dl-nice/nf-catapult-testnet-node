@@ -21,12 +21,13 @@
   "apiNode": {
     "host": "{{api_node_host}}",
     "port": 7900,
-    "publicKey": "{{api_node_public_key}}"
+    "publicKey": "{{api_node_public_key}}",
+    "timeout": 1000
   },
 
   "websocket": {
     "mq": {
-      "host": "{{api_node_host}}",
+      "host": "{{api_node_broker_host}}",
       "port": 7902,
       "monitorInterval": 500,
       "connectTimeout": 10000,
