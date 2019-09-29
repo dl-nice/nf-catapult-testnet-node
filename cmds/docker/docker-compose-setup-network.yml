@@ -18,7 +18,7 @@ services:
   ######  dynamic configuration  ###########
 
   generate-raw-addresses:
-    image: techbureau/catapult-tools:gcc-0.5.0.1
+    build: dockerfiles/tools
     command: bash -c "/bin-mount/generate-raw-addresses-if-needed 50 /addresses/raw-addresses.txt /addresses/addresses.yaml"
     volumes:
     - ../../bin/bash:/bin-mount
@@ -57,18 +57,19 @@ services:
     depends_on:
     - generate-configs
 
-  peer-node-1-nemgen:
-    build: dockerfiles/nemgen
-    command: bash -c "/bin-mount/wait /state/configs-generated && /bin/bash /userconfig/nemgen.sh && touch /state/peer-node-1-nemgen"
-    stop_signal: SIGINT
-    volumes:
-    - ../../build/catapult-config/peer-node-1/userconfig/resources/:/userconfig/resources/
-    - ../../build/nemesis/:/nemesis
-    - ../../data/peer-node-1:/data:rw
-    - ../../bin/bash:/bin-mount
-    - ../../build/state:/state:rw
-    depends_on:
-    - generate-configs
+# removed peer-node-1 for nf-testnet nodes
+#  peer-node-1-nemgen:
+#    build: dockerfiles/nemgen
+#    command: bash -c "/bin-mount/wait /state/configs-generated && /bin/bash /userconfig/nemgen.sh && touch /state/peer-node-1-nemgen"
+#    stop_signal: SIGINT
+#    volumes:
+#    - ../../build/catapult-config/peer-node-1/userconfig/resources/:/userconfig/resources/
+#    - ../../build/nemesis/:/nemesis
+#    - ../../data/peer-node-1:/data:rw
+#    - ../../bin/bash:/bin-mount
+#    - ../../build/state:/state:rw
+#    depends_on:
+#    - generate-configs
 
   api-node-0-nemgen:
     build: dockerfiles/nemgen
