@@ -15,43 +15,43 @@ binDirectory = ../seed/mijin-test
 
 [namespaces]
 
-cat = true
-cat.currency = true
-cat.harvest = true
+jz = true
+jz.gas = true
+jz.jzj = true
 
-[namespace>cat]
+[namespace>jz]
 
 duration = 0
 
 [mosaics]
 
-cat:currency = true
-cat:harvest = true
+jz:gas = true
+jz:jzj = true
 
-[mosaic>cat:currency]
+[mosaic>jz:gas]
 
-divisibility = 6
+divisibility = 0
 duration = 0
-supply = 8'998'999'998'000'000
+supply = 100'000'000
 isTransferable = true
 isSupplyMutable = false
 isRestrictable = false
 
-[distribution>cat:currency]
+[distribution>jz:gas]
 {{#cat_currency_distribution}}
 {{address}} = {{amount}}
 {{/cat_currency_distribution}}
 
-[mosaic>cat:harvest]
+[mosaic>jz:jzj]
 
-divisibility = 3
+divisibility = 6
 duration = 0
-supply = 15'000'000
+supply = 100'000'000'000'000
 isTransferable = true
 isSupplyMutable = true
 isRestrictable = false
 
-[distribution>cat:harvest]
+[distribution>jz:jzj]
 {{#cat_harvest_distribution}}
 {{address}} = {{amount}}
 {{/cat_harvest_distribution}}

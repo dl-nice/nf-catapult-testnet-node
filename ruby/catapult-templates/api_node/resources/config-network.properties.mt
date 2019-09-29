@@ -19,12 +19,12 @@ importanceGrouping = 39
 importanceActivityPercentage = 5
 maxRollbackBlocks = 40
 maxDifficultyBlocks = 60
-defaultDynamicFeeMultiplier = 10'000
+defaultDynamicFeeMultiplier = 1
 
 maxTransactionLifetime = 24h
 maxBlockFutureTime = 10s
 
-initialCurrencyAtomicUnits = 8'998'999'998'000'000
+initialCurrencyAtomicUnits = 100'000'000
 maxMosaicAtomicUnits = 9'000'000'000'000'000
 
 totalChainImportance = {{total_chain_importance}}
@@ -51,7 +51,7 @@ maxBondedTransactionLifetime = 48h
 
 [plugin:catapult.plugins.lockhash]
 
-lockedFundsPerAggregate = 10'000'000
+lockedFundsPerAggregate = 10
 maxHashLockDuration = 2d
 
 [plugin:catapult.plugins.locksecret]
@@ -71,7 +71,7 @@ maxMosaicDuration = 3650d
 maxMosaicDivisibility = 6
 
 mosaicRentalFeeSinkPublicKey = {{mosaic_rental_fee_sink_public_key}}
-mosaicRentalFee = 500'000'000
+mosaicRentalFee = 100
 
 [plugin:catapult.plugins.multisig]
 
@@ -92,8 +92,8 @@ namespaceGracePeriodDuration = 2m
 reservedRootNamespaceNames = xem, nem, user, account, org, com, biz, net, edu, mil, gov, info
 
 namespaceRentalFeeSinkPublicKey = {{namespace_rental_fee_sink_public_key}}
-rootNamespaceRentalFeePerBlock = 1'000'000
-childNamespaceRentalFee = 100'000'000
+rootNamespaceRentalFeePerBlock = 1
+childNamespaceRentalFee = 20
 
 [plugin:catapult.plugins.restrictionaccount]
 

@@ -8,7 +8,7 @@ enableCacheDatabaseStorage = {{enable_cache_database_storage}}
 enableAutoSyncCleanup = false
 
 enableTransactionSpamThrottling = true
-transactionSpamThrottlingMaxBoostFee = 10'000'000
+transactionSpamThrottlingMaxBoostFee = 10
 
 maxBlocksPerSyncAttempt = 400
 maxChainBytesPerSyncAttempt = 100MB
@@ -18,7 +18,7 @@ shortLivedCacheBlockDuration = 100m
 shortLivedCachePruneInterval = 90s
 shortLivedCacheMaxSize = 10'000'000
 
-minFeeMultiplier = 0
+minFeeMultiplier = 1
 transactionSelectionStrategy = oldest
 unconfirmedTransactionsCacheMaxResponseSize = 20MB
 unconfirmedTransactionsCacheMaxSize = 1'000'000
@@ -45,12 +45,12 @@ maxCacheDatabaseWriteBatchSize = 5MB
 maxTrackedNodes = 5'000
 
 # all hosts are trusted when list is empty
-trustedHosts = 
+trustedHosts =
 
 [localnode]
 
-host = 
-friendlyName = 
+host =
+friendlyName =
 version = 0
 roles = Api
 
